@@ -15,4 +15,8 @@ Compiled files are outputted to `./dist`
 
 # Testing
 
-Run `npx jest` or `npm test`
+Run `npx jest --coverage`
+
+# Running
+
+Run `npx ts-node src/index.ts`
