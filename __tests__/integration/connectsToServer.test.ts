@@ -2,9 +2,6 @@ import EchoServer, * as index from '../../src/EchoServer';
 import * as process from 'child_process';
 import * as net from 'net';
 
-import flushPromises from "flush-promises";
-let sleep = require('util').promisify(setTimeout);
-
 test('the server starts and stops', async function() {
   jest.setTimeout(10000);
   const socket = new net.Socket;
