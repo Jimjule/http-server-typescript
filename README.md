@@ -19,4 +19,4 @@ Run `npx jest --coverage`
 
 # Running
 
-Run `npx ts-node src/index.ts`
+Run `npx ts-node app.ts`
