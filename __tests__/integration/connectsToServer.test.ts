@@ -1,29 +1,23 @@
-import * as index from '../../src/index';
+import EchoServer, * as index from '../../src/EchoServer';
 import * as process from 'child_process';
 import * as net from 'net';
 
-test('the server opens and closes', async () => {
-  const consoleSpy = spyOn(console, 'log');
+import flushPromises from "flush-promises";
+let sleep = require('util').promisify(setTimeout);
 
-  const server: net.Server = await index.runServer();
-  expect(server.listening).toBe(true);
+test('the server starts and stops', async function() {
+  jest.setTimeout(10000);
+  const socket = new net.Socket;
+  const portNumber: number = 4567;
 
-  server.close();
-  expect(server.listening).toBe(false);
+  const server: net.Server = new net.Server;
 
-  expect(consoleSpy).toHaveBeenCalledWith('Ready to connect');
-})
+  const echoServer = new EchoServer(socket, portNumber, server);
 
-test('the server can listen to a port', async () => {
-  const consoleSpy = spyOn(console, 'log');
+  echoServer.start(portNumber);
 
-  const server: net.Server = await index.runServer();
-
-  await consoleCommandPromise("netcat localhost 4567");
-
-  expect(consoleSpy).toHaveBeenCalledWith('Listening on port 4567');
-
-  server.close();
+  await consoleCommandPromise(`netcat localhost ${portNumber}`);
+  echoServer.close();
 })
 
 const consoleCommandPromise = async (command: string) => {
